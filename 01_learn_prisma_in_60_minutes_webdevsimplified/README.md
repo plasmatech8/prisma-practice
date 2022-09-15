@@ -58,3 +58,29 @@ npx prisma migrate dev --name init
 This will generate migrations in the migrations folder (SQL queries).
 
 It will also install a prisma client WITH YOUR TYPES BUILT INTO THE PACKAGE.
+
+## 05. Prisma Client Basics
+
+To re-generate the client library:
+```prisma
+npx prisma generate
+```
+
+It will also spit out an example code snippet for client-side usage.
+
+We will create an example script like below:
+```ts
+import { PrismaClient } from '@prisma/client'
+const prisma = new PrismaClient()
+
+async function main() {
+    const user = await prisma.user.create({
+        data: {
+            name: "John"
+        }
+    })
+    console.log(user)
+}
+
+main();
+```
