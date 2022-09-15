@@ -84,3 +84,11 @@ async function main() {
 
 main();
 ```
+
+> Pondering. It would be nice to have this schema + migrations system built into Supabase.
+> Supabase already has its own type generator, but the DX is not as good as Prisma because Prisma generates
+> an entire library, whereas Supabase just gives you a type interface to pass into your client as a generic.
+> It is also worth noting that both Prisma and Supabase appear to only support Typescript.
+> It is also worth noting that Supabase does not appear to generate types for Database or Edge Functions.
+
+## 06. Datasources and Generators
