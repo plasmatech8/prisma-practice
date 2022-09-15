@@ -33,3 +33,16 @@ npx prisma init --datasource-provider postgresql
 ```
 
 You can also use sqlite, or many other databases.
+
+## 03. Basic Prisma Model Setup
+
+To create models, we edit the `schema.prisma` and create a model.
+
+Every model needs an @id attribute.
+
+```prisma
+model User {
+  id Int @id @default(autoincrement())
+  name String
+}
+```
