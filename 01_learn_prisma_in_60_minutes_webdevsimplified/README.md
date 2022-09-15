@@ -24,3 +24,12 @@ Create ts config with instructions on the prisma website:
   }
 }
 ```
+
+## 02. Prisma Setup
+
+Initialise Prisma code with Postgres:
+```bash
+npx prisma init --datasource-provider postgresql
+```
+
+You can also use sqlite, or many other databases.
