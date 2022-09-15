@@ -55,5 +55,6 @@ We will add the new model using the prisma command to generate a migrations file
 npx prisma migrate dev --name init
 ```
 
-This will generate migrations in the migrations folder (SQL queries)
-and it will also npm install the prisma client.
+This will generate migrations in the migrations folder (SQL queries).
+
+It will also install a prisma client WITH YOUR TYPES BUILT INTO THE PACKAGE.
