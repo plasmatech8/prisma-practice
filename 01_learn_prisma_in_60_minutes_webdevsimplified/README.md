@@ -27,12 +27,12 @@ Create ts config with instructions on the prisma website:
 
 ## 02. Prisma Setup
 
-Initialise Prisma code with Postgres:
+Initialise Prisma code with Sqlite:
 ```bash
-npx prisma init --datasource-provider postgresql
+npx prisma init --datasource-provider sqlite
 ```
 
-You can also use sqlite, or many other databases.
+You can also use other databases.
 
 ## 03. Basic Prisma Model Setup
 
@@ -46,3 +46,14 @@ model User {
   name String
 }
 ```
+
+## 04. Prisma Migration Basics
+
+We will add the new model using the prisma command to generate a migrations file.
+
+```bash
+npx prisma migrate dev --name init
+```
+
+This will generate migrations in the migrations folder (SQL queries)
+and it will also npm install the prisma client.
