@@ -116,7 +116,7 @@ model User {
 model Post {
     id        Int      @id @default(autoincrement())
     // ...
-    author    User     @relation(fields: [userId], references: [id])
+    author    User     @relation(fields: [authorId], references: [id])
     authorId  Int
 }
 ```
@@ -159,3 +159,34 @@ model Category {
   posts Post[]
 }
 ```
+
+
+## 08. Model Attributes
+
+More noteworthy column attributes:
+* `@unique` makes sure that the column only contains unique values
+* `@updatedAt` automatically updates the DateTime when the record is created/updated
+* `@default(now())` sets default DateTime value to now
+
+We can also do block-level attributes using `@@`:
+* `@@unique([age, name])` add this line to a model and it will make sure that name and age together must be unique.
+* `@@index([email])` will allow us to query by email more easily
+* `@@id([title, authorId])` will allow us to have a composite primary key
+
+## 09. Enums
+
+We can create enums like below.
+```prisma
+model User {
+  id             String          @id @default(uuid())
+  // ...
+  role           Role            @default(BASIC)
+}
+
+enum Role {
+  BASIC
+  ADMIN
+}
+```
+
+sqlite does not support enums, so we will ignore this.
