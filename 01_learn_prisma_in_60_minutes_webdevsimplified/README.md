@@ -348,3 +348,7 @@ await prisma.user.update({
     where: { email: "asdsa@example.com" },  data: { userPreference: { disconnect: true} }
 })
 ```
+
+## 14. Delete Operations
+
+Basically the same as find operations.
