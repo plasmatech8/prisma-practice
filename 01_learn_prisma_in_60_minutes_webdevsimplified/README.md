@@ -145,6 +145,7 @@ model Post {
 What about a many-to-many relationship?
 
 We don't need to do much. It will automatically create a join table between the two tables.
+(You don't need foreign key IDs in your main tables when you use a join table)
 
 ```prisma
 model Post {
