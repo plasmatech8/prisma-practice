@@ -322,3 +322,29 @@ await prisma.user.update({
     where: { email: "kyle@test.com" /* unique field */ },  data: { age: { decrement: 1  /* multiply, increment, etc */} }
 })
 ```
+
+## 13. Connecting Existing Relationships
+
+What if we want to connect an existing user with a userPreference?
+
+Instead of using `create` we can use `connect`:
+```ts
+await prisma.user.create({
+    data: {
+        age: 4,
+        email: "asdsa@example.com",
+        isAdmin: true,
+        name: "Eugene",
+        UserPreference: {
+            connect: { id: "SOME-USER-PREFERENCE-ID" }
+        },
+    }
+})
+```
+
+And we can disconnect with `disconnect`:
+```ts
+await prisma.user.update({
+    where: { email: "asdsa@example.com" },  data: { userPreference: { disconnect: true} }
+})
+```
