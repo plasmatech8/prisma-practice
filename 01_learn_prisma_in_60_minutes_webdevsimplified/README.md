@@ -4,6 +4,8 @@ Following [Learn Prisma In 60 Minutes](https://youtu.be/RebA5J-rlwg) by Web Dev 
 
 Starts with the [Prisma Quickstart](https://www.prisma.io/docs/getting-started/quickstart)
 
+Also worth checking out [Prisma in 100 Seconds](https://youtu.be/rLRIB6AF2Dg)
+
 ## 01. Project Setup
 
 Install dependencies:
@@ -249,8 +251,8 @@ Note:
 
 ## 11. Client Read Operations
 
-Find unique by a unique column / primary key
 ```ts
+// Find unique by a unique column / primary key
 await prisma.user.findUnique({
     where: {
         age_name: {
@@ -259,10 +261,8 @@ await prisma.user.findUnique({
         }
     }
 })
-```
 
-Find unique by a unique column / primary key...
-```ts
+// Find unique by a unique column / primary key...
 await prisma.user.findUnique({
     where: {
         age_name: {
@@ -271,31 +271,23 @@ await prisma.user.findUnique({
         }
     }
 })
-```
 
-Find first user where column is...
-```ts
+// Find first user where column is...
 await prisma.user.findFirst({
     where: { name: { startsWith: "eug" } }
 })
-```
 
-Find many users where name is X and only return one of each distinct name and age:
-```ts
+// Find many users where name is X and only return one of each distinct name and age:
 await prisma.user.findMany({
     where: { name: 'Sally' }, distinct: ["name", "age"]
 })
-```
 
-Find many users with pagination can be done using `skip`, `take`, and `orderBy`:
-```ts
+// Find many users with pagination can be done using `skip`, `take`, and `orderBy`:
 console.log(await prisma.user.findMany({
         take: 2, skip: 1, orderBy: { age: "desc" }
 }))
-```
 
-Find users with AND (can also do OR):
-```ts
+// Find users with AND (can also do OR):
 await prisma.user.findMany({
     where: {
         AND: [
@@ -314,10 +306,19 @@ You can do conditions like: `every`, `none` and `some`
 await prisma.user.findMany({
     where: { writtenPosts: { every: { title: "Test"} } }
 })
-```
-
-```ts
 await prisma.post.findMany({
     where: { author: { is: { age: 27 } } }
+})
+```
+
+## 12. Client Update Operations
+
+We can update/updateMany users in similar ways to create and read:
+```ts
+await prisma.user.updateMany({
+    where: { age: 4 },  data: { age: 26 }
+})
+await prisma.user.update({
+    where: { email: "kyle@test.com" /* unique field */ },  data: { age: { decrement: 1  /* multiply, increment, etc */} }
 })
 ```

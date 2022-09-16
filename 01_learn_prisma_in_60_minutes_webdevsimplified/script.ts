@@ -75,6 +75,17 @@ async function main() {
     //     where: { author: { is: { age: 27 } } }
     // }))
 
+    // console.log(chalk.bold.underline.blue('Update user many'));
+    // console.log(await prisma.user.updateMany({
+    //     where: { age: 4 },  data: { age: 26 }
+    // }))
+    // console.log(await prisma.user.findMany())
+
+    // console.log(chalk.bold.underline.blue('Update user single'));
+    // await prisma.user.update({
+    //     where: { email: "asdsa@example.com" /* unique field */ },  data: { age: { decrement: 1} }
+    // })
+    // console.log(await prisma.user.findMany())
 
     console.log(chalk.bold.underline.blue('Deleting Users'));
     console.log(await prisma.user.deleteMany())
