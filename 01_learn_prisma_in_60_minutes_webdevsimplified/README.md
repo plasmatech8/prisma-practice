@@ -245,3 +245,78 @@ Note:
 
 Note:
 * `createMany` is not supported in sqlite
+
+## 11. Client Read Operations
+
+Find unique by a unique column / primary key
+```ts
+await prisma.user.findUnique({
+    where: {
+        age_name: {
+            age: 27,
+            name: "Kyle"
+        }
+    }
+})
+```
+
+Find unique by a unique column / primary key...
+```ts
+await prisma.user.findUnique({
+    where: {
+        age_name: {
+            age: 27,
+            name: "Kyle"
+        }
+    }
+})
+```
+
+Find first user where column is...
+```ts
+await prisma.user.findFirst({
+    where: { name: { startsWith: "eug" } }
+})
+```
+
+Find many users where name is X and only return one of each distinct name and age:
+```ts
+await prisma.user.findMany({
+    where: { name: 'Sally' }, distinct: ["name", "age"]
+})
+```
+
+Find many users with pagination can be done using `skip`, `take`, and `orderBy`:
+```ts
+console.log(await prisma.user.findMany({
+        take: 2, skip: 1, orderBy: { age: "desc" }
+}))
+```
+
+Find users with AND (can also do OR):
+```ts
+await prisma.user.findMany({
+    where: {
+        AND: [
+            { name: { startsWith: "e" } },
+            { name: { endsWith: "e" } }
+        ]
+    }
+})
+```
+
+## 12. Relationship filtering
+
+You can do conditions like: `every`, `none` and `some`
+
+```ts
+await prisma.user.findMany({
+    where: { writtenPosts: { every: { title: "Test"} } }
+})
+```
+
+```ts
+await prisma.post.findMany({
+    where: { author: { is: { age: 27 } } }
+})
+```
