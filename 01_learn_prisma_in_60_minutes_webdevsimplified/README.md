@@ -91,4 +91,71 @@ main();
 > It is also worth noting that both Prisma and Supabase appear to only support Typescript.
 > It is also worth noting that Supabase does not appear to generate types for Database or Edge Functions.
 
-## 06. Datasources and Generators
+## 06. Model Fields
+
+Model fields:
+* Attributes start with `@` and are used to add properties to a column
+* Optional columns have a question mark after the type. e.g. `String?`
+
+Field types:
+* Int, BigInt, Boolean, Float, Decimal
+* String, Json (not supported in sqlite), Bytes, DateTime
+* Unsupported (used for different databases)
+* You can also use other models as the type
+
+## 07. Model Relationships
+
+You can reference other models using relations:
+```prisma
+model User {
+    id      Int     @id @default(autoincrement())
+    // ...
+    Post    Post[]
+}
+
+model Post {
+    id        Int      @id @default(autoincrement())
+    // ...
+    author    User     @relation(fields: [userId], references: [id])
+    authorId  Int
+}
+```
+
+What if we have multiple lists?
+
+If we want to add multiple lists of posts to the user, we need to add a name. e.g.
+```prisma
+model User {
+  id            String  @id @default(uuid())
+  // ...
+  writtenPosts  Post[] @relation("WrittenPosts")
+  favoritePosts Post[] @relation("FavoritePosts")
+}
+
+model Post {
+  id            String   @id @default(uuid())
+  // ...
+  author        User     @relation("WrittenPosts", fields: [authorId], references: [id])
+  authorId      String
+  favoritedBy   User?    @relation("FavoritePosts", fields: [favoritedById], references: [id])
+  favoritedById String
+}
+```
+
+What about a many-to-many relationship?
+
+We don't need to do much. It will automatically create a join table between the two tables.
+
+```prisma
+model Post {
+  id            String     @id @default(uuid())
+  // ...
+  Categories    Category[]
+}
+
+model Category {
+  id    String @id @default(uuid())
+  // ...
+  posts Post[]
+}
+```
