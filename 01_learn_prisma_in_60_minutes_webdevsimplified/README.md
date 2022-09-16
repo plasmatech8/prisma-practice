@@ -190,3 +190,15 @@ enum Role {
 ```
 
 sqlite does not support enums, so we will ignore this.
+
+
+## 09. Migration Debug
+
+```bash
+npx prisma migrate dev
+#  • Step 4 Added the required column `age` to the `User` table without a default value. There are 3 rows in this table, it is not possible to execute this step.
+#   • Step 4 Added the required column `email` to the `User` table without a default value. There are 3 rows in this table, it is not possible to execute this step.
+#   • Step 4 Added the required column `isAdmin` to the `User` table without a default value. There are 3 rows in this table, it is not possible to execute this step.
+```
+
+For this case, we will delete all users using `await prisma.user.deleteMany()`.
