@@ -160,7 +160,6 @@ model Category {
 }
 ```
 
-
 ## 08. Model Attributes
 
 More noteworthy column attributes:
@@ -202,3 +201,47 @@ npx prisma migrate dev
 ```
 
 For this case, we will delete all users using `await prisma.user.deleteMany()`.
+
+## 10. Client Create Operations
+
+Note that you should only use one Prisma client if you want to make multiple database connections.
+
+We can create a user, and also create a referenced UserPreferences object in a single request:
+```ts
+await prisma.user.create({
+        data: {
+            age: 4,
+            email: "asdsa@example.com",
+            isAdmin: true,
+            name: "Eugene",
+            UserPreference: {
+                create: {
+                    emailUpdates: true
+                }
+            },
+        },
+        include: {
+            UserPreference: true
+        }
+    }).then(console.log).catch(e => console.log(e.message))
+```
+
+Note:
+* When we delete this record, we get a foreign key error due to UserPreference referencing the user.
+* We can switch around the relationship so that User references the UserPreference instead.
+* Now we can delete the user and the user preference remains
+
+We can also use a `select` block instead of a `include` block:
+```ts
+select: {
+    name: true,
+    UserPreference: { select: { emailUpdates: true } }
+}
+```
+
+Note:
+* We can add log to our prisma client to print the SQL queries made
+* `const prisma = new PrismaClient({ log: ["query"] })`
+
+Note:
+* `createMany` is not supported in sqlite
